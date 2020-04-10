@@ -23,6 +23,9 @@ type packetConn struct {
     ifi *net.Interface
     s socket
 
+    // Sleep function implementation
+    sleeper sleeper
+
     // Timeouts set via Set{Read, Write,}Deadline, guarded by mutex
     timeoutMu sync.RWMutex
     rtimeout time.Time
@@ -37,6 +40,12 @@ type sock interface {
     Recvfrom([]byte, int) (int, syscall.SOckaddr, error)
     Sendto([]byte, int, syscall.Sockaddr) error
     SetNonBlock(bool) error
+}
+
+// sleeper is an interface which enables swapping out an acture time.Sleep
+// call for testing
+type sleeper interface {
+    Sleep(time.Duration)
 }
 
 // listenPacket creates a net.PacketConn which can be used to send and receive
@@ -58,16 +67,21 @@ func listenPacket(ifi *net.Interface, socket int, proto int) (*packetConn, error
     }
 
     // Wrap raw socket in socket interface and create packetConn
-    return newPacketConn(ifi, &sysSocket{
-        fd: sock,
-    }, pbe)
+    return newPacketConn(
+        ifi, 
+        &sysSocket{
+            fd: sock,
+        }, 
+        pbe,
+        &timeSleeper{},
+    )
 }
 
 // newPacketConn creates a net.PacketConn using the specified network
 // interface, wrapped socket, and big endian protocol number
 //
 // it is the entry point for tests in this package
-func newPacketConn(ifi, *net.Interface, s socket, pbe uint16) (*packetConn, error) {
+func newPacketConn(ifi, *net.Interface, s socket, pbe uint16, sleeper sleeper) (*packetConn, error) {
     // Set nonblocking I/O so we can time out reads and writes
     if err := s.SetNonblock(true); err != nil {
         return nil, err
@@ -85,6 +99,7 @@ func newPacketConn(ifi, *net.Interface, s socket, pbe uint16) (*packetConn, erro
     return &packetConn{
         ifi: ifi,
         s: s,
+        sleeper: sleeper,
     }, err
 }
 
@@ -133,7 +148,7 @@ func (p *packetConn) ReadFrom(b []byte) (int, net.Addr, error) {
             // EAGAIN is returned when no data is available for non-blocking
             // I/O, so keep trying after a short delay
             if err == syscall.EAGAIN {
-                time.Sleep(2 * time.Millisecond)
+                p.sleeper.Sleep(2 * time.Millisecond)
                 continue
             }
 
@@ -246,4 +261,11 @@ func (s *sysSocket) Sendto(p []byte, flags int, to syscall.Sockaddr) error {
 }
 func (s *sysSocket) SetNonblock(nonblocking bool) error { 
     return syscall.SetNonblock(s.fd, nonblocking) 
+}
+
+// timeSleeper sleeps using time.Sleep.
+type timeSleeper struct{}
+
+func (_ timeSleeper) Sleep(d time.Duration) {
+    time.Sleep(d)
 }
