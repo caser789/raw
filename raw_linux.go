@@ -33,12 +33,12 @@ type packetConn struct {
 
 // socket is an interface which enables swapping out socket syscalls for
 // testing
-type sock interface {
+type socket interface {
     Bind(syscall.Sockaddr) error
     Close() error
-    Recvfrom([]byte, int) (int, syscall.SOckaddr, error)
+    Recvfrom([]byte, int) (int, syscall.Sockaddr, error)
     Sendto([]byte, int, syscall.Sockaddr) error
-    SetNonBlock(bool) error
+    SetNonblock(bool) error
 }
 
 // sleeper is an interface which enables swapping out an acture time.Sleep
@@ -80,7 +80,7 @@ func listenPacket(ifi *net.Interface, socket int, proto int) (*packetConn, error
 // interface, wrapped socket, and big endian protocol number
 //
 // it is the entry point for tests in this package
-func newPacketConn(ifi, *net.Interface, s socket, pbe uint16, sleeper sleeper) (*packetConn, error) {
+func newPacketConn(ifi *net.Interface, s socket, pbe uint16, sleeper sleeper) (*packetConn, error) {
     // Set nonblocking I/O so we can time out reads and writes
     if err := s.SetNonblock(true); err != nil {
         return nil, err
