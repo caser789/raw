@@ -53,3 +53,9 @@ func ListenPacket(ifi *net.Interface, socket int, proto int) (*PacketConn, error
 func htons(i uint16) uint16 {
     return (i<<8)&0xff00 | i>>8
 }
+
+type timeoutError struct{}
+
+func (e *timeoutError) Error() string { return "i/o timeout" }
+func (e *timeoutError) Timeout() bool { return true }
+func (e *timeoutError) Temporary() bool { return true }
