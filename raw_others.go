@@ -23,7 +23,7 @@ type packetConn struct { }
 // or syscall.SOCK_DGRAM. proto specifies the protocol which should be
 // captured and transmitted. proto is automatically converted to network byte
 // order (big endian), akin to the htons() function in C.
-func listenPacket(ifi *net.Interface, socket int, proto int) (*packetConn, error) {
+func listenPacket(ifi *net.Interface, proto int) (*packetConn, error) {
     return nil, ErrNotImplemented
 }
 

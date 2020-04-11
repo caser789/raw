@@ -55,12 +55,12 @@ type sleeper interface {
 // or syscall.SOCK_DGRAM. proto specifies the protocol which should be
 // captured and transmitted. proto is automatically converted to network byte
 // order (big endian), akin to the htons() function in C.
-func listenPacket(ifi *net.Interface, socket int, proto int) (*packetConn, error) {
+func listenPacket(ifi *net.Interface, proto int) (*packetConn, error) {
     // Convert proto to big endian
     pbe := htons(uint16(proto))
 
     // Open a packet socket using specified socket and protocol types
-    sock, err := syscall.Socket(syscall.AF_PACKET, socket, int(pbe))
+    sock, err := syscall.Socket(syscall.AF_PACKET, syscall.SOCK_RAW, int(pbe))
     if err != nil {
         return nil, err
     }

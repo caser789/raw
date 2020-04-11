@@ -37,8 +37,8 @@ func (a Addr) String() string {
 // or syscall.SOCK_DGRAM. proto specifies the protocol which should be captured
 // and transimitted. proto is automattically converted to network byte
 // order (big endian), akin to the htons() function in C.
-func ListenPacket(ifi *net.Interface, socket int, proto int) (net.PacketConn, error) {
-    return listenPacket(ifi, socket, proto)
+func ListenPacket(ifi *net.Interface, proto int) (net.PacketConn, error) {
+    return listenPacket(ifi, proto)
 }
 
 // htons converts a short (uint16) from host-to-network byte order.
