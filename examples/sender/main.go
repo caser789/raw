@@ -4,13 +4,14 @@ import "net"
 import "log"
 import "github.com/caser789/raw/src/raw"
 import "github.com/mdlayher/ethernet"
-// import "github.com/mdlayher/raw"
 
 const etherType = 0xcccc
+const ifName = "wlp3s0"
+// const ifName = "enp2s0"
 
 func main() {
     log.Println("start")
-    ifi, err := net.InterfaceByName("enp2s0")
+    ifi, err := net.InterfaceByName(ifName)
     if err != nil {
         log.Fatalf("failed to open interface: %v", err)
     }
