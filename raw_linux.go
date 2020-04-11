@@ -11,6 +11,11 @@ import (
     "golang.org/x/net/context"
 )
 
+const (
+    // ProtocolARP specifies the Address Resolution Protocol
+    ProtocolARP Protocol = syscall.ETH_P_ARP
+)
+
 var (
     // Must implement net.PacketConn at compile-time.
     _ net.PacketConn = &packetConn{}
@@ -55,7 +60,7 @@ type sleeper interface {
 // or syscall.SOCK_DGRAM. proto specifies the protocol which should be
 // captured and transmitted. proto is automatically converted to network byte
 // order (big endian), akin to the htons() function in C.
-func listenPacket(ifi *net.Interface, proto int) (*packetConn, error) {
+func listenPacket(ifi *net.Interface, proto Protocol) (*packetConn, error) {
     // Convert proto to big endian
     pbe := htons(uint16(proto))
 

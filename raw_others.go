@@ -7,6 +7,10 @@ import (
     "time"
 )
 
+const (
+    ProtocolARP Protocol = 0
+)
+
 var (
     // Must implement net.PacketConn at compile-time.
     _ net.PacketConn = &packetConn{}
@@ -23,7 +27,7 @@ type packetConn struct { }
 // or syscall.SOCK_DGRAM. proto specifies the protocol which should be
 // captured and transmitted. proto is automatically converted to network byte
 // order (big endian), akin to the htons() function in C.
-func listenPacket(ifi *net.Interface, proto int) (*packetConn, error) {
+func listenPacket(ifi *net.Interface, proto Protocol) (*packetConn, error) {
     return nil, ErrNotImplemented
 }
 
