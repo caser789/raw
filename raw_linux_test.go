@@ -455,6 +455,33 @@ func Test_packetConnWriteToSendtoOK(t *testing.T) {
     }
 }
 
+// Test that socket close functions as intended
+
+type captureCloseSocket struct {
+    closed bool
+    noopSocket
+}
+
+func (s *captureCloseSocket) Close() error {
+    s.closed = true
+    return nil
+}
+
+func Test_packetConnClose(t *testing.T) {
+    s := &captureCloseSocket{}
+    p := &packetConn{
+        s: s,
+    }
+
+    if err := p.Close(); err != nil {
+        t.Fatal(err)
+    }
+
+    if !s.closed {
+        t.Fatalf("socket should be closed, but is not")
+    }
+}
+
 // testSleeper is a sleeper implementation which atomically increments a
 // couter to indicate how long it has slept
 type testSleeper struct {
