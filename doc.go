@@ -5,6 +5,7 @@
 // The raw package provides the connections utils
 package raw
 
+// blank imports help docs.
 import (
     // raw package
 	_ "github.com/caser789/raw/src/raw"
