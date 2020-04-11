@@ -9,6 +9,7 @@ import (
 
 const (
     ProtocolARP Protocol = 0
+    ProtocolAoE Protocol = 0
 )
 
 var (

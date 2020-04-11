@@ -14,6 +14,7 @@ import (
 const (
     // ProtocolARP specifies the Address Resolution Protocol
     ProtocolARP Protocol = syscall.ETH_P_ARP
+    ProtocolAoE Protocol = syscall.ETH_P_AOE
 )
 
 var (
