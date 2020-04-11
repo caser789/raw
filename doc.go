@@ -1,5 +1,5 @@
 package raw
 
 import (
-    _ "github.com/caser789/raw/src/raw"
+	_ "github.com/caser789/raw/src/raw"
 )
