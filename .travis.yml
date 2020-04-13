@@ -3,7 +3,6 @@ go:
     - 1.x
 os:
     - linux
-    - osx
 before_install:
     - go get golang.org/x/lint/golint
     - go get honnef.co/go/tools/cmd/staticcheck
