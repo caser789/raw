@@ -14,9 +14,9 @@ import (
 const (
 	// ProtocolARP specifies the Address Resolution Protocol
 	ProtocolARP Protocol = syscall.ETH_P_ARP
-	// ProtocolAoE specifies the 
+	// ProtocolAoE specifies the
 	ProtocolAoE Protocol = syscall.ETH_P_AOE
-	// ProtocolWoL specifies the 
+	// ProtocolWoL specifies the
 	ProtocolWoL Protocol = 0x0842
 )
 

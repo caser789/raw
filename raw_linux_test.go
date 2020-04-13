@@ -2,7 +2,8 @@
 
 package raw
 
-import ( "bytes"
+import (
+	"bytes"
 	"errors"
 	"net"
 	"sync/atomic"
