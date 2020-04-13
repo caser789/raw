@@ -7,6 +7,7 @@ os:
 before_install:
     - go get golang.org/x/lint/golint
     - go get honnef.co/go/tools/cmd/staticcheck
+    - go get github.com/mattn/goveralls
     - go get -d ./...
 script:
     - go build -tags=gofuzz ./...

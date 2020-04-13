@@ -279,6 +279,6 @@ func (s *sysSocket) SetNonblock(nonblocking bool) error {
 // timeSleeper sleeps using time.Sleep.
 type timeSleeper struct{}
 
-func (_ timeSleeper) Sleep(d time.Duration) {
+func (timeSleeper) Sleep(d time.Duration) {
 	time.Sleep(d)
 }

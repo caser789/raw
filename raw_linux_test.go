@@ -2,8 +2,7 @@
 
 package raw
 
-import (
-	"bytes"
+import ( "bytes"
 	"errors"
 	"net"
 	"sync/atomic"
@@ -552,8 +551,8 @@ func (t *testSleeper) Sleep(d time.Duration) {
 // the basis for more specific socket implementations
 type noopSocket struct{}
 
-func (_ noopSocket) Bind(sa syscall.Sockaddr) error                              { return nil }
-func (_ noopSocket) Close() error                                                { return nil }
-func (_ noopSocket) Recvfrom(p []byte, flags int) (int, syscall.Sockaddr, error) { return 0, nil, nil }
-func (_ noopSocket) Sendto(p []byte, flags int, to syscall.Sockaddr) error       { return nil }
-func (_ noopSocket) SetNonblock(nonblocking bool) error                          { return nil }
+func (noopSocket) Bind(sa syscall.Sockaddr) error                              { return nil }
+func (noopSocket) Close() error                                                { return nil }
+func (noopSocket) Recvfrom(p []byte, flags int) (int, syscall.Sockaddr, error) { return 0, nil, nil }
+func (noopSocket) Sendto(p []byte, flags int, to syscall.Sockaddr) error       { return nil }
+func (noopSocket) SetNonblock(nonblocking bool) error                          { return nil }

@@ -2,7 +2,7 @@ package main
 
 import "net"
 import "log"
-import "github.com/caser789/raw/src/raw"
+import "github.com/caser789/raw"
 import "github.com/mdlayher/ethernet"
 
 const etherType = 0xcccc
