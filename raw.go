@@ -47,32 +47,37 @@ func (c *Conn) ReadFrom(b []byte) (int, net.Addr, error) {
 	return c.p.ReadFrom(b)
 }
 
-// WriteTo
+// WriteTo method
 func (c *Conn) WriteTo(b []byte, addr net.Addr) (int, error) {
 	return c.p.WriteTo(b, addr)
 }
 
+// Close method
 func (c *Conn) Close() error {
 	return c.p.Close()
 }
 
+// LocalAddr method
 func (c *Conn) LocalAddr() net.Addr {
 	return c.p.LocalAddr()
 }
 
+// SetDeadline method
 func (c *Conn) SetDeadline(t time.Time) error {
 	return c.p.SetDeadline(t)
 }
 
+// SetReadDeadline method
 func (c *Conn) SetReadDeadline(t time.Time) error {
 	return c.p.SetReadDeadline(t)
 }
 
+// SetWriteDeadline method
 func (c *Conn) SetWriteDeadline(t time.Time) error {
 	return c.p.SetWriteDeadline(t)
 }
 
-// A protocol is a network protocol constant which id the type of
+// Protocol is A protocol is a network protocol constant which id the type of
 // traffic a raw socket should send and receive
 type Protocol uint16
 
